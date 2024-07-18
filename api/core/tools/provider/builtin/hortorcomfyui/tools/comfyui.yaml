@@ -1,0 +1,63 @@
+identity:
+  name: hortor_comfyui
+  author: Cuikaishuai
+  label:
+    en_US: Hortor Comfyui
+    zh_Hans: Hortor Comfyui
+    pt_BR: Hortor Comfyui
+  description:
+    en_US: ai backend image tool
+    zh_Hans: ai创作后台生图工具
+    pt_BR: ferramenta de imagem de backend de IA
+description:
+  human:
+    en_US: ai backend image tool
+    zh_Hans: ai创作后台生图工具
+    pt_BR: ferramenta de imagem de backend de IA
+  llm: comfyui tool for generating images
+parameters:
+  - name: model
+    type: select
+    required: true
+    human_description:
+      en_US: Used to select the model
+      zh_Hans: 用于选择模型
+      pt_BR: used for selecting the model
+    label:
+      en_US: Model
+      zh_Hans: 模型
+      pt_BR: Modelo
+    form: form
+    options:
+      - value: fejsf_text2img
+        label:
+          en_US: fat goose text to image
+          zh_Hans: 肥鹅文生图
+          pt_BR: ganso gordo texto para imagem
+    default: fejsf_text2img
+  - name: prompt
+    type: string
+    required: true
+    label:
+      en_US: Prompt
+      zh_Hans: 提示词
+      pt_BR: Prompt
+    human_description:
+      en_US: Image prompt
+      zh_Hans: 图像提示词
+      pt_BR: Imagem prompt
+    llm_description: Image prompt of Comfyui
+    form: llm
+  - name: negative_prompt
+    type: string
+    required: false
+    label:
+      en_US: Negative Prompt
+      zh_Hans: 负面提示词
+      pt_BR: Prompt negativo
+    human_description:
+      en_US: Negative image prompt
+      zh_Hans: 负面图像提示词
+      pt_BR: Imagem negativa prompt
+    llm_description: Negative image prompt of Comfyui
+    form: llm

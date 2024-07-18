@@ -1,0 +1,16 @@
+identity:
+  author: Cuikaishuai
+  name: hortorcomfyui
+  label:
+    en_US: Hortor Comfyui
+    zh_Hans: Hortor Comfyui
+    pt_BR: Hortor Comfyui
+  description:
+    en_US: ai backend image tool
+    zh_Hans: ai创作后台生图工具
+    pt_BR: ferramenta de imagem de backend de IA
+  icon: icon.png
+  tags:
+    - image
+    - productivity
+credentials_for_provider:
