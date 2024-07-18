@@ -14,3 +14,14 @@ identity:
     - image
     - productivity
 credentials_for_provider:
+  base_url:
+    type: secret-input
+    required: true
+    label:
+      en_US: Base URL
+      zh_Hans: 服务器的Base URL
+      pt_BR: Base URL
+    placeholder:
+      en_US: Please input your server's Base URL
+      zh_Hans: 请输入你的服务器的 Base URL
+      pt_BR: Please input your server's Base URL

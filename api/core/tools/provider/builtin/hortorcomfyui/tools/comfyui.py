@@ -1,8 +1,6 @@
 import random
-from base64 import b64decode
 from typing import Any, Union
 
-import httpx
 import requests
 
 from core.tools.entities.tool_entities import ToolInvokeMessage
@@ -10,8 +8,6 @@ from core.tools.tool.builtin_tool import BuiltinTool
 
 
 class ComfyuiTool(BuiltinTool):
-    url: str = "https://sd-webui-new.hortorgames.com/sd-webui/api/v1/comfyui/sync"
-
     def _invoke(self,
                 user_id: str,
                 tool_parameters: dict[str, Any],
@@ -19,6 +15,9 @@ class ComfyuiTool(BuiltinTool):
         """
             invoke tools
         """
+        base_url = self.runtime.credentials.get('base_url', "")
+        if base_url == "":
+            return self.create_text_message('Please input base_url')
         model = tool_parameters.get('model', '')
         if not model:
             return self.create_text_message('Please select model')
@@ -27,7 +26,7 @@ class ComfyuiTool(BuiltinTool):
             return self.create_text_message('Please input prompt')
         negative_prompt = tool_parameters.get('negative_prompt', '')
 
-        response = requests.post(self.url, json={
+        response = requests.post(base_url, json={
             "version": model,
             "param": {
                 "prompt": prompt,
