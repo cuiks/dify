@@ -36,7 +36,11 @@ class ComfyuiTool(BuiltinTool):
             if not image_id:
                 return self.create_text_message('Please input image id')
 
-            image_binary = self.get_variable_file(self.VARIABLE_KEY.IMAGE)
+            # image_binary = self.get_variable_file(self.VARIABLE_KEY.IMAGE)
+            image_variable = self.get_default_image_variable()
+            print("image_variable: " * 10)
+            print(image_variable)
+            image_binary = self.get_variable_file(image_variable.name)
             if not image_binary:
                 return self.create_text_message('Image not found, please request user to generate image firstly.')
 
@@ -75,21 +79,21 @@ class ComfyuiTool(BuiltinTool):
         random_id = ''.join(random.choices(characters, k=length))
         return random_id
 
-    def get_runtime_parameters(self) -> list[ToolParameter]:
-        """
-        override the runtime parameters
-        """
-        images = [
-            ToolParameter.get_simple_instance(
-                name='image_id',
-                llm_description=f'the image id that you want to hortor image, \
-                    and the image id should be specified in \
-                        {[i.name for i in self.list_default_image_variables()]}',
-                type=ToolParameter.ToolParameterType.SELECT,
-                required=True,
-                options=[i.name for i in self.list_default_image_variables()]
-            )
-        ]
-        print("images: " * 100)
-        print(images)
-        return images
+    # def get_runtime_parameters(self) -> list[ToolParameter]:
+    #     """
+    #     override the runtime parameters
+    #     """
+    #     images = [
+    #         ToolParameter.get_simple_instance(
+    #             name='image_id',
+    #             llm_description=f'the image id that you want to hortor image, \
+    #                 and the image id should be specified in \
+    #                     {[i.name for i in self.list_default_image_variables()]}',
+    #             type=ToolParameter.ToolParameterType.SELECT,
+    #             required=True,
+    #             options=[i.name for i in self.list_default_image_variables()]
+    #         )
+    #     ]
+    #     print("images: " * 100)
+    #     print(images)
+    #     return images
