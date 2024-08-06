@@ -26,6 +26,9 @@ class ComfyuiTool(BuiltinTool):
             return self.create_text_message('Please input prompt')
         negative_prompt = tool_parameters.get('negative_prompt', '')
 
+        print("tool_parameters: " * 10)
+        print(tool_parameters)
+
         img_url = ""
         if model in ["sqxly_img2img"]:
             image_id = tool_parameters.get('image_id', '')
@@ -38,7 +41,7 @@ class ComfyuiTool(BuiltinTool):
 
             # 二进制image_binary, 上传到 http://background.hortorgames.com/background/v1/file/upload
             response = requests.post('https://background.hortorgames.com/background/v1/file/upload', files={
-                'file': image_binary
+                'filecontent': image_binary
             })
             if response.status_code != 200:
                 raise Exception('Request failed')
@@ -75,10 +78,10 @@ class ComfyuiTool(BuiltinTool):
         """
         override the runtime parameters
         """
-        return [
+        images = [
             ToolParameter.get_simple_instance(
                 name='image_id',
-                llm_description=f'the image id that you want to vectorize, \
+                llm_description=f'the image id that you want to hortor image, \
                     and the image id should be specified in \
                         {[i.name for i in self.list_default_image_variables()]}',
                 type=ToolParameter.ToolParameterType.SELECT,
@@ -86,3 +89,6 @@ class ComfyuiTool(BuiltinTool):
                 options=[i.name for i in self.list_default_image_variables()]
             )
         ]
+        print("images: " * 100)
+        print(images)
+        return images
