@@ -79,21 +79,10 @@ class ComfyuiTool(BuiltinTool):
         random_id = ''.join(random.choices(characters, k=length))
         return random_id
 
-    # def get_runtime_parameters(self) -> list[ToolParameter]:
-    #     """
-    #     override the runtime parameters
-    #     """
-    #     images = [
-    #         ToolParameter.get_simple_instance(
-    #             name='image_id',
-    #             llm_description=f'the image id that you want to hortor image, \
-    #                 and the image id should be specified in \
-    #                     {[i.name for i in self.list_default_image_variables()]}',
-    #             type=ToolParameter.ToolParameterType.SELECT,
-    #             required=True,
-    #             options=[i.name for i in self.list_default_image_variables()]
-    #         )
-    #     ]
-    #     print("images: " * 100)
-    #     print(images)
-    #     return images
+    def get_runtime_parameters(self) -> list[ToolParameter]:
+        """
+        override the runtime parameters
+        """
+        print("get_runtime_parameters: " * 10)
+        print(self.variables)
+        return super().get_runtime_parameters()
