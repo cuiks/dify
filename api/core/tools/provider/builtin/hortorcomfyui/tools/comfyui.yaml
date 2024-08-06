@@ -66,16 +66,16 @@ parameters:
       pt_BR: Imagem negativa prompt
     llm_description: Negative image prompt of Comfyui
     form: llm
-  - name: image_id
+  - name: image_uri
     type: string
     required: false
     label:
-      en_US: Image ID
-      zh_Hans: 图像id
-      pt_BR: Imagem ID
+      en_US: Image URI
+      zh_Hans: 图像地址
+      pt_BR: Imagem URI
     human_description:
-      en_US: Image id
-      zh_Hans: 图像id
-      pt_BR: Imagem id
-    llm_description: Image id of Comfyui
+      en_US: Image URI
+      zh_Hans: 图像地址
+      pt_BR: Imagem URI
+    llm_description: Image URI of Comfyui
     form: llm

@@ -25,41 +25,14 @@ class ComfyuiTool(BuiltinTool):
         if not prompt:
             return self.create_text_message('Please input prompt')
         negative_prompt = tool_parameters.get('negative_prompt', '')
-
-        print("tool_parameters: " * 10)
-        print(tool_parameters)
-        print(self.variables)
-
-        img_url = ""
-        if model in ["sqxly_img2img"]:
-            # image_id = tool_parameters.get('image_id', '')
-            # if not image_id:
-            #     return self.create_text_message('Please input image id')
-
-            # image_binary = self.get_variable_file(self.VARIABLE_KEY.IMAGE)
-            image_variable = self.get_default_image_variable()
-            print("image_variable: " * 10)
-            print(image_variable)
-            image_binary = self.get_variable_file(image_variable.name)
-            if not image_binary:
-                return self.create_text_message('Image not found, please request user to generate image firstly.')
-
-            # 二进制image_binary, 上传到 http://background.hortorgames.com/background/v1/file/upload
-            response = requests.post('https://background.hortorgames.com/background/v1/file/upload', files={
-                'filecontent': image_binary
-            })
-            if response.status_code != 200:
-                raise Exception('Request failed')
-            if response.json().get("meta", {}).get("errCode", -1) != 0:
-                raise Exception(response.json().get("meta", {}).get("errMsg", 'Request failed'))
-            img_url = response.json().get("data", "")
+        image_uri = tool_parameters.get('image_uri', '')
 
         response = requests.post(base_url, json={
             "version": model,
             "param": {
                 "prompt": prompt,
                 "negative_prompt": negative_prompt,
-                "image": img_url
+                "image": image_uri
             }
         })
         if response.status_code != 200:
