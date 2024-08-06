@@ -29,11 +29,16 @@ parameters:
       pt_BR: Modelo
     form: form
     options:
-      - value: fejsf_text2img
+      - value: sqxly_text2img
         label:
-          en_US: fat goose text to image
-          zh_Hans: 肥鹅文生图
+          en_US: text to image
+          zh_Hans: 文生图
           pt_BR: ganso gordo texto para imagem
+      - value: sqxly_img2img
+        label:
+          en_US: image to image
+          zh_Hans: 图生图
+          pt_BR: ganso gordo imagem para imagem
     default: fejsf_text2img
   - name: prompt
     type: string
