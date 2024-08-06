@@ -32,9 +32,9 @@ class ComfyuiTool(BuiltinTool):
 
         img_url = ""
         if model in ["sqxly_img2img"]:
-            image_id = tool_parameters.get('image_id', '')
-            if not image_id:
-                return self.create_text_message('Please input image id')
+            # image_id = tool_parameters.get('image_id', '')
+            # if not image_id:
+            #     return self.create_text_message('Please input image id')
 
             # image_binary = self.get_variable_file(self.VARIABLE_KEY.IMAGE)
             image_variable = self.get_default_image_variable()
