@@ -28,6 +28,7 @@ class ComfyuiTool(BuiltinTool):
 
         print("tool_parameters: " * 10)
         print(tool_parameters)
+        print(self.variables)
 
         img_url = ""
         if model in ["sqxly_img2img"]:
