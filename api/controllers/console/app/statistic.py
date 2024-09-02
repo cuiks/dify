@@ -535,7 +535,7 @@ api.add_resource(DailyMessageStatistic, "/apps/<uuid:app_id>/statistics/daily-me
 api.add_resource(DailyConversationStatistic, "/apps/<uuid:app_id>/statistics/daily-conversations")
 api.add_resource(DailyTerminalsStatistic, "/apps/<uuid:app_id>/statistics/daily-end-users")
 api.add_resource(DailyTokenCostStatistic, "/apps/<uuid:app_id>/statistics/token-costs")
-api.add_resource(DailyTokenCostWithoutSignStatistic, "/apps/<uuid:app_id>/statistics/token-costs")
+api.add_resource(DailyTokenCostWithoutSignStatistic, "/apps/<uuid:app_id>/statistics/no-login/token-costs")
 api.add_resource(AverageSessionInteractionStatistic, "/apps/<uuid:app_id>/statistics/average-session-interactions")
 api.add_resource(UserSatisfactionRateStatistic, "/apps/<uuid:app_id>/statistics/user-satisfaction-rate")
 api.add_resource(AverageResponseTimeStatistic, "/apps/<uuid:app_id>/statistics/average-response-time")
