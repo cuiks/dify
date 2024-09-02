@@ -236,64 +236,6 @@ class DailyTokenCostStatistic(Resource):
         return jsonify({"data": response_data})
 
 
-class DailyTokenCostWithoutSignStatistic(Resource):
-    @setup_required
-    @get_app_model
-    def get(self, app_model):
-        parser = reqparse.RequestParser()
-        parser.add_argument("start", type=datetime_string("%Y-%m-%d %H:%M"), location="args")
-        parser.add_argument("end", type=datetime_string("%Y-%m-%d %H:%M"), location="args")
-        parser.add_argument("tz", type=str, location="args")
-        args = parser.parse_args()
-
-        sql_query = """
-                SELECT date(DATE_TRUNC('day', created_at AT TIME ZONE 'UTC' AT TIME ZONE :tz )) AS date, 
-                    sum(messages.message_tokens) AS msg_tokens, sum(messages.answer_tokens) AS ans_tokens, 
-                    sum(total_price) AS total_price 
-                    FROM messages where app_id = :app_id 
-                """
-        arg_dict = {"tz": args["tz"], "app_id": app_model.id}
-
-        timezone = pytz.timezone(args["tz"])
-        utc_timezone = pytz.utc
-
-        if args["start"]:
-            start_datetime = datetime.strptime(args["start"], "%Y-%m-%d %H:%M")
-            start_datetime = start_datetime.replace(second=0)
-
-            start_datetime_timezone = timezone.localize(start_datetime)
-            start_datetime_utc = start_datetime_timezone.astimezone(utc_timezone)
-
-            sql_query += " and created_at >= :start"
-            arg_dict["start"] = start_datetime_utc
-
-        if args["end"]:
-            end_datetime = datetime.strptime(args["end"], "%Y-%m-%d %H:%M")
-            end_datetime = end_datetime.replace(second=0)
-
-            end_datetime_timezone = timezone.localize(end_datetime)
-            end_datetime_utc = end_datetime_timezone.astimezone(utc_timezone)
-
-            sql_query += " and created_at < :end"
-            arg_dict["end"] = end_datetime_utc
-
-        sql_query += " GROUP BY date order by date"
-
-        response_data = []
-
-        with db.engine.begin() as conn:
-            rs = conn.execute(db.text(sql_query), arg_dict)
-            for i in rs:
-                response_data.append(
-                    {
-                        "date": str(i.date), "msg_tokens": i.msg_tokens, "ans_tokens": i.ans_tokens,
-                        "total_price": i.total_price, "currency": "USD"
-                    }
-                )
-
-        return jsonify({"data": response_data})
-
-
 class AverageSessionInteractionStatistic(Resource):
     @setup_required
     @login_required
@@ -535,7 +477,6 @@ api.add_resource(DailyMessageStatistic, "/apps/<uuid:app_id>/statistics/daily-me
 api.add_resource(DailyConversationStatistic, "/apps/<uuid:app_id>/statistics/daily-conversations")
 api.add_resource(DailyTerminalsStatistic, "/apps/<uuid:app_id>/statistics/daily-end-users")
 api.add_resource(DailyTokenCostStatistic, "/apps/<uuid:app_id>/statistics/token-costs")
-api.add_resource(DailyTokenCostWithoutSignStatistic, "/apps/<uuid:app_id>/statistics/no-login/token-costs")
 api.add_resource(AverageSessionInteractionStatistic, "/apps/<uuid:app_id>/statistics/average-session-interactions")
 api.add_resource(UserSatisfactionRateStatistic, "/apps/<uuid:app_id>/statistics/user-satisfaction-rate")
 api.add_resource(AverageResponseTimeStatistic, "/apps/<uuid:app_id>/statistics/average-response-time")
