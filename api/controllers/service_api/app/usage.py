@@ -69,7 +69,7 @@ class UsageApi(Resource):
                 response_data.append(
                     {
                         "date": str(i.date), "msg_tokens": i.msg_tokens, "ans_tokens": i.ans_tokens,
-                        "total_price": i.total_price, "currency": "USD"
+                        "total_price": float(i.total_price), "currency": "USD"
                     }
                 )
 
