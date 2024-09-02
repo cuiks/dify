@@ -19,7 +19,6 @@ class UsageApi(Resource):
     }
 
     @validate_app_token
-    @marshal_with(parameters_fields)
     def get(self, app_model: App):
         """Retrieve app usage."""
 
