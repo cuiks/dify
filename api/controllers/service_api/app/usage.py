@@ -4,9 +4,8 @@ import pytz
 from flask_restful import Resource, fields, marshal_with, reqparse
 
 from controllers.service_api import api
-from controllers.service_api.app.error import AppUnavailableError
 from controllers.service_api.wraps import validate_app_token
-from models.model import App, AppMode
+from models.model import App
 from extensions.ext_database import db
 
 
@@ -22,19 +21,7 @@ class UsageApi(Resource):
     @validate_app_token
     @marshal_with(parameters_fields)
     def get(self, app_model: App):
-        """Retrieve app parameters."""
-        if app_model.mode in [AppMode.ADVANCED_CHAT.value, AppMode.WORKFLOW.value]:
-            workflow = app_model.workflow
-            if workflow is None:
-                raise AppUnavailableError()
-
-            features_dict = workflow.features_dict
-            user_input_form = workflow.user_input_form(to_old_structure=True)
-        else:
-            app_model_config = app_model.app_model_config
-            features_dict = app_model_config.to_dict()
-
-            user_input_form = features_dict.get("user_input_form", [])
+        """Retrieve app usage."""
 
         parser = reqparse.RequestParser()
         parser.add_argument("start", required=True, type=str, location="args")
