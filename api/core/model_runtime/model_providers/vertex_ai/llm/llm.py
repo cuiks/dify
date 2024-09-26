@@ -21,6 +21,7 @@ from google.api_core import exceptions
 from google.cloud import aiplatform
 from google.oauth2 import service_account
 from PIL import Image
+import requests
 
 from core.model_runtime.entities.llm_entities import LLMResult, LLMResultChunk, LLMResultChunkDelta, LLMUsage
 from core.model_runtime.entities.message_entities import (
